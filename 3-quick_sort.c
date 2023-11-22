@@ -1,5 +1,10 @@
 #include "sort.h"
 
+/**
+ * swap - Swaps two elements in an array
+ * @a: Pointer to the first element
+ * @b: Pointer to the second element
+ */
 void swap(int *a, int *b)
 {
 	int temp = *a;
