@@ -2,43 +2,52 @@
 
 /**
  * counting_sort - Sorts an array of integers in ascending order using
- * the Counting sort algorithm.
+ *                 the Counting sort algorithm.
  * @array: The array to be sorted.
  * @size: The size of the array.
+ *
+ * Return: Nothing.
  */
 void counting_sort(int *array, size_t size)
 {
-	int i, *count, max = array[0];
-	size_t idx = 0, cnt;
+	unsigned int i;
+	int *count_array = NULL;
+	int max_value = 0, temp, j;
 
-	if (array == NULL || size <= 1)
+	if (array == NULL || size < 2)
 		return;
-
-	for (cnt = 1; cnt < size; ++cnt)
+	for (i = 0; i < size; ++i)
 	{
-		if (array[cnt] > max)
-			max = array[cnt];
+		if (array[i] > max_value)
+			max_value = array[i];
 	}
 
-	count = malloc((max + 1) * sizeof(int));
-
-	if (count == NULL)
+	count_array = malloc(sizeof(int) * (max_value + 1));
+	if (count_array == NULL)
 		return;
-	for (i = 0; i <= max; ++i)
-		count[i] = 0;
-	for (cnt = 0; cnt < size; ++cnt)
-		count[array[cnt]]++;
-	for (i = 0; i <= max; ++i)
-		printf("%d, ", count[i]);
-	printf("\n");
 
-	for (i = 0; i <= max; ++i)
+	for (j = 0; j <= max_value; ++j)
+		count_array[j] = 0;
+	for (i = 0; i < size; ++i)
+		count_array[array[i]]++;
+
+	for (j = 0; j < max_value; ++j)
 	{
-		while (count[i] > 0)
+		count_array[j + 1] += count_array[j];
+		printf("%d, ", count_array[j]);
+	}
+	count_array[j + 1] += count_array[j];
+	printf("%d\n", count_array[j + 1]);
+
+	for (i = 0; i < size; ++i)
+	{
+		j = count_array[array[i]] - 1;
+		if (array[i] != array[j])
 		{
-			array[idx++] = i;
-			count[i]--;
+			temp = array[i];
+			array[i] = array[j];
+			array[j] = temp;
 		}
 	}
-	free(count);
+	free(count_array);
 }
