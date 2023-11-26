@@ -1,40 +1,40 @@
 #include "sort.h"
 
 /**
- * swap_nodesLeftToRight - swaps nodes from left to right
+ * swapNodesLeftToRight - swaps nodes from left to right
  * @list: pointer to list
- * @current: pointer to current node
- * @nodeToSwap: auxiliary pointer
+ * @crnt: pointer to current node
+ * @node: auxiliary pointer
  * Return: no return
  */
-void swap_nodesLeftToRight(listint_t **list, listint_t *current, listint_t *node)
+void swapNodesLeftToRight(listint_t **list, listint_t *crnt, listint_t *node)
 {
-	if (current->prev)
-		current->prev->next = node;
+	if (crnt->prev)
+		crnt->prev->next = node;
 	else
 		*list = node;
 
 	if (node->next)
-		node->next->prev = current;
+		node->next->prev = crnt;
 
-	current->next = node->next;
-	node->prev = current->prev;
-	node->next = current;
-	current->prev = node;
+	crnt->next = node->next;
+	node->prev = crnt->prev;
+	node->next = crnt;
+	crnt->prev = node;
 
 	print_list(*list);
 }
 
 /**
- * swap_nodesRightToLeft - swaps nodes from right to left
+ * swapNodesRightToLeft - swaps nodes from right to left
  * @list: pointer to list
- * @current: pointer to current node
- * @nodeToSwap: auxiliary pointer
+ * @crnt: pointer to current node
+ * @node: auxiliary pointer
  * Return: no return
  */
-void swap_nodesRightToLeft(listint_t **list, listint_t *current, listint_t *node)
+void swapNodesRightToLeft(listint_t **list, listint_t *crnt, listint_t *node)
 {
-	node = current->prev;
+	node = crnt->prev;
 	node->next->prev = node->prev;
 
 	if (node->prev)
@@ -73,7 +73,7 @@ void cocktail_sort_list(listint_t **list)
 				if (current->n > current->next->n)
 				{
 					nodeToSwap = current->next;
-					swap_nodesLeftToRight(list, current, nodeToSwap);
+					swapNodesLeftToRight(list, current, nodeToSwap);
 					flag = 1;
 				}
 				else
@@ -87,7 +87,7 @@ void cocktail_sort_list(listint_t **list)
 			{
 				if (current->prev->n > current->n)
 				{
-					swap_nodesRightToLeft(list, current, nodeToSwap);
+					swapNodesRightToLeft(list, current, nodeToSwap);
 					flag = 1;
 				}
 				else
